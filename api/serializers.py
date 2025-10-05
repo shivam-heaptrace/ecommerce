@@ -17,14 +17,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         # Create user with a hashed password
-        user = User.objects.create_user(
+        return User.objects.create_user(            
             email=validated_data['email'],
             password=validated_data['password'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             role=validated_data.get('role', User.Role.CUSTOMER) # Default to Customer
-        )
-        return user
+        )        
 
 
 class ProductSerializer(serializers.ModelSerializer):

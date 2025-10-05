@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, status, viewsets
-from rest_framework.response import Repsponse
+from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -16,7 +16,7 @@ class AdminUserCreateAPIView(generics.CreateAPIView):
     API for creating an admin user
     """
     permission_classes = [AllowAny]
-    serializer_class = UserRegistrarionSerializer
+    serializer_class = UserRegistrationSerializer
     
     def perform_create(self, serializer):
         serializer.save(role=User.Role.ADMIN)
@@ -31,24 +31,25 @@ class CustomerSignUpAPIView(generics.CreateAPIView):
         
     def create(self, request, *args, **kwargs):
         super().create(request, *args, **kwargs)
-        return Response({"Message": "Sign Up Successful"}, status=status.HTTP_201_CREATED) [cite: 76]
+        return Response({"Message": "Sign Up Successful"}, status=status.HTTP_201_CREATED) 
+    #[cite: 76]
     
     
-    class UserLoginAPIView(ObtainAuthToken):
-        def post(self, request, *args, **kwargs):
-            serializer = self.serializer_class(data=request.data, context={'reqeust':request})
-            serializer.is_valid(raise_exception=True)
-            user = serializer.validated_data['user']
-            token, created = Token.objects.get_or_create(user=user)
-            
-            return Response({
-                'token': token.key,
-                'id': user.pk,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'role': user.role
-            })
+class UserLoginAPIView(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'reqeust':request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        
+        return Response({
+            'token': token.key,
+            'id': user.pk,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'role': user.role
+        })
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -97,4 +98,6 @@ class OrderViewSet(viewsets.ModelViewSet):
             return Order.objects.all()
         return Order.objects.filter(customer=user)
     
-    def perform_create(self, )
+    def perform_create(self, serializer):
+        #Assign the current logged in user as the customer
+        serializer.save(customer=self.request.user)
