@@ -1,0 +1,85 @@
+# ----------------------------------------------------------------------
+# General Python & Environment
+# ----------------------------------------------------------------------
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env/
+
+# Dependencies
+# Ignore downloaded packages and build artifacts
+build/
+develop-eggs/
+dist/
+*.egg-info/
+.installed.cfg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Coverage reports
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.cache/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+
+# ----------------------------------------------------------------------
+# Django Specific
+# ----------------------------------------------------------------------
+
+# Local SQLite database file
+# DO NOT COMMIT a development database with real data!
+db.sqlite3
+*.sqlite3
+
+# Log files
+*.log
+
+# User uploaded media files
+# This folder usually contains files uploaded via the admin or forms.
+# It should be managed separately for deployment (e.g., S3).
+/media/
+
+# Compiled translation files (.mo files)
+*.mo
+*.pot
+
+# Secret/Configuration files
+# It's highly recommended to keep sensitive settings out of version control.
+# e.g., secret keys, database credentials.
+# You will need to create a template file (e.g., .env.example or settings_local.py.example) 
+# and commit that instead.
+.env
+local_settings.py
+
+# Collectstatic directory
+# The files in this directory are generated when you run 'python manage.py collectstatic'
+# and should be generated on the production/staging environment, not committed.
+# Only ignore if your STATIC_ROOT is set to 'staticfiles'. Change if necessary.
+/staticfiles/
+
+
+# ----------------------------------------------------------------------
+# IDE and OS Files
+# ----------------------------------------------------------------------
+
+# VS Code
+.vscode/
+
+# PyCharm / JetBrains IDEs
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db

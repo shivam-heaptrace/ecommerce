@@ -22,8 +22,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             password=validated_data['password'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            role=validated_data.get('role', User.Role.CUSTOMER) # Default to Customer
-        )        
+            role=validated_data.get('role', User.Role.CUSTOMER)  # Default to Customer
+        )
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -43,12 +43,12 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['id', 'customer_id', 'products', 'product_ids', 'created_at']
 
-        def create(self, validated_data):
-            product_ids = validated_data.pop('product_ids')
-            order = Order.objects.create(**validated_data)
+    def create(self, validated_data):
+        product_ids = validated_data.pop('product_ids')
+        order = Order.objects.create(**validated_data)
 
-            for product_id in product_ids:
-                product = Product.objects.get(id=product_id)
-                order.products.add(product)
+        for product_id in product_ids:
+            product = Product.objects.get(id=product_id)
+            order.products.add(product)
 
-            return order
+        return order
