@@ -31,8 +31,12 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    # One User can have many Orders
     customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+
+    # One Order can contain many Products, and one Product can be part of many Orders
     products = models.ManyToManyField(Product)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
